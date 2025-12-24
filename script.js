@@ -78,6 +78,7 @@ const shakeDragState = {
 
 const SHAKE_DRAG_THRESHOLD = 24;
 const SHAKE_DRAG_COOLDOWN_MS = 500;
+const SNAP_DISTANCE_PX = 70;
 
 function pickWord() {
   const level = state.solvedCount + 1;
@@ -217,6 +218,7 @@ function onPointerDown(event) {
   const tileEl = event.currentTarget;
   const tile = state.tiles.find((t) => t.id === tileEl.dataset.id);
   if (!tile) return;
+  updateRects();
   event.preventDefault();
   tile.el.setPointerCapture(event.pointerId);
   state.draggingId = tile.id;
@@ -259,8 +261,23 @@ function onPointerUp(event) {
     );
   });
 
-  if (targetIndex >= 0) {
-    snapToSlot(tile, targetIndex);
+  let snapIndex = targetIndex;
+  if (snapIndex < 0) {
+    const nearest = state.slotRects
+      .map((rect, index) => ({
+        index,
+        dist: Math.hypot(event.clientX - rect.centerX, event.clientY - rect.centerY),
+        width: rect.width,
+      }))
+      .filter((slot) => !state.slots[slot.index])
+      .sort((a, b) => a.dist - b.dist)[0];
+    if (nearest && nearest.dist <= Math.max(SNAP_DISTANCE_PX, nearest.width * 0.9)) {
+      snapIndex = nearest.index;
+    }
+  }
+
+  if (snapIndex >= 0) {
+    snapToSlot(tile, snapIndex);
   } else {
     tile.inSlot = false;
     tile.slotIndex = null;
