@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Santa's Anagram Sack</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="Santa_Video_Loop_Generation.mp4" type="video/mp4" />
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+  <main class="game">
+    <header class="hud">
+      <div class="brand">
+        <div class="logo">Santa's Anagram Sack</div>
+        <div class="subtitle">Solve the scramble. Use shakes wisely.</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="label">Score</span><span id="score">0</span></div>
+        <div class="stat"><span class="label">Streak</span><span id="streak">0</span></div>
+        <div class="stat"><span class="label">Shakes</span><span id="shakes">2</span></div>
+        <div class="stat select">
+          <label class="label" for="difficulty">Difficulty</label>
+          <select id="difficulty">
+            <option value="auto">Auto</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <div class="stat toggle">
+          <label class="label" for="grinchMode">Grinch Mode</label>
+          <input id="grinchMode" type="checkbox" />
+        </div>
+        <button id="infoBtn" class="btn info" aria-label="Info">i</button>
+      </div>
+    </header>
+
+    <section class="board">
+      <div class="sack-area">
+        <div id="sack" class="sack">
+          <div class="sack-top"></div>
+          <div class="sack-body"></div>
+          <div class="sack-shadow"></div>
+        </div>
+        <div class="sack-note">Shake to reshuffle the rack</div>
+      </div>
+
+      <div class="answer-area">
+        <div id="slots" class="slots"></div>
+        <div class="streak-bar">
+          <div class="streak-track">
+            <div id="streakFill" class="streak-fill"></div>
+            <span class="marker" style="left: 30%;">3</span>
+            <span class="marker" style="left: 50%;">5</span>
+            <span class="marker" style="left: 100%;">10</span>
+          </div>
+        </div>
+        <div id="message" class="message">Arrange the letters to form a word.</div>
+        <div class="actions">
+          <button id="submit" class="btn primary">Submit</button>
+          <button id="shake" class="btn">Shake Sack</button>
+          <button id="skip" class="btn ghost">Skip</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="tiles-area">
+      <div class="rack">
+        <div id="tiles" class="tiles"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="credit">Akash Sriram</div>
+
+  <div id="infoModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+    <div class="modal-card">
+      <h2 id="infoTitle">How to Play</h2>
+      <p>Drag letters into the slots to form the hidden holiday word.</p>
+      <ul>
+        <li>Submit a correct word for +100 points.</li>
+        <li>Wrong submissions cost 25 points and break your streak.</li>
+        <li>No shake bonus: +50 when you solve without shaking.</li>
+        <li>Streak bonuses: 3 (+25), 5 (+50), 10 (+100).</li>
+        <li>Shakes reshuffle unplaced letters only.</li>
+      </ul>
+      <p class="byline">By Akash Sriram</p>
+      <button id="closeInfo" class="btn primary">Got it</button>
+    </div>
+  </div>
+
+  <div id="snow" class="snow"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
